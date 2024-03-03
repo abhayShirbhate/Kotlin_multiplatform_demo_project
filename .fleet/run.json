@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        
+        {
+            "name": "composeApp [Desktop]",
+            "type": "gradle",
+            "workingDir": "D:\\practise\\KMP\\KMP Demo App\\KMP Demo App",
+            "tasks": ["desktopRun"],
+            "args": ["-DmainClass=MainKt", "--quiet", "-p", "D:\\practise\\KMP\\KMP Demo App\\KMP Demo App\\composeApp"],
+            "initScripts": {
+                "flmapper": "ext.mapPath = { path -> null }"
+            }
+        },
+        {
+            "name": "composeApp [Desktop] (1)",
+            "type": "gradle",
+            "workingDir": "D:\\practise\\KMP\\KMP Demo App\\KMP Demo App",
+            "tasks": ["desktopRun"],
+            "args": ["-DmainClass=MainKt", "--quiet", "-p", "D:\\practise\\KMP\\KMP Demo App\\KMP Demo App\\composeApp"],
+            "initScripts": {
+                "flmapper": "ext.mapPath = { path -> null }"
+            }
+        }
+    ]
+}
