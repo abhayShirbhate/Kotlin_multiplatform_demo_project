@@ -6,11 +6,10 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import viewmodel.UserViewModel
-import viewmodel.FavoriteViewModel
+import sqDelight.DatabaseDriverFactory
 
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(databaseDriverFactory: DatabaseDriverFactory) {
     var selectedTab by remember { mutableStateOf(0) }
 
     Scaffold(
@@ -51,8 +50,8 @@ fun DashboardScreen() {
         }
     ) {
         when (selectedTab) {
-            0 -> UserScreen()
-            1 -> FavoritePage()
+            0 -> UserScreen(databaseDriverFactory)
+            1 -> FavoritePage(databaseDriverFactory)
             2 -> ToDoPage()
             3 -> ProfilePage()
         }

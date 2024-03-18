@@ -20,16 +20,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
+import repository.UserLocalDbRepositoryImpl
 import repository.UserRepositoryImpl
+import sqDelight.DatabaseDriverFactory
+import sqDelight.UserDao
 
 
 @Composable
-fun UserScreen() {
+fun UserScreen(databaseDriverFactory: DatabaseDriverFactory) {
     val viewModel: UserViewModel = getViewModel(Unit, viewModelFactory {
         UserViewModel(
-            UserRepositoryImpl(
-                ApiClient()
-            )
+            UserRepositoryImpl(ApiClient()),
+            UserLocalDbRepositoryImpl(UserDao(databaseDriverFactory))
+
         )
     })
 

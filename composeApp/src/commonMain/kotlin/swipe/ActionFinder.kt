@@ -45,7 +45,7 @@ internal data class ActionFinder(
 
     @Suppress("ReplaceManualRangeWithIndicesCalls") // Avoid allocating an Iterator for every pixel swiped.
     for (i in 0 until size) {
-      val action = if (userModel?.isFavorite == true) this[1] else this[0]
+      val action = if (userModel?.isFavorite == true) this[0] else this[1]
       val actionWidth = (action.weight / totalWeights) * totalWidth
       val actionEndX = offsetSoFar + actionWidth
 

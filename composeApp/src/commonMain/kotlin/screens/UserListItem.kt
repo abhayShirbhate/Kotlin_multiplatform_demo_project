@@ -92,8 +92,8 @@ fun swipeableContainer(userModel: User, viewModel: UserViewModel) {
         },
         background = Color.Green,
         onSwipe = {
-//            user.isFavorite = true
-//            viewModel.updateUserToLocal(user)
+            user.isFavorite = true
+            viewModel.updateFavouriteStatus(user)
                   },
         weight = 1.0,
         isUndo = false
@@ -101,8 +101,8 @@ fun swipeableContainer(userModel: User, viewModel: UserViewModel) {
 
     val favoriteBoarder = SwipeAction(
         onSwipe = {
-//            user.isFavorite = false
-//            viewModel.updateUserToLocal(user)
+            user.isFavorite = false
+            viewModel.updateFavouriteStatus(user)
                   },
         icon = {
             defaultIcon(

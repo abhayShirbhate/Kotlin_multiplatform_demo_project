@@ -1,3 +1,4 @@
+import org.apache.http.entity.ContentType.create
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
      kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.9.22"
+    id("app.cash.sqldelight").version("2.0.1")
 
 }
 
@@ -33,12 +35,14 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
+        val sqlDelightVersion = "2.0.1"
         
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
             implementation("io.ktor:ktor-client-android:2.3.1")
+            implementation("app.cash.sqldelight:android-driver:$sqlDelightVersion")
 
         }
         commonMain.dependencies {
@@ -58,13 +62,22 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:2.3.1")
             implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.1")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+
+
+            implementation("app.cash.sqldelight:runtime:$sqlDelightVersion")
+            implementation("app.cash.sqldelight:sqlite-driver:$sqlDelightVersion")
+            implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelightVersion")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.5.2")
+            implementation("app.cash.sqldelight:sqlite-driver:$sqlDelightVersion")
+
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:2.3.1")
+            implementation("app.cash.sqldelight:native-driver:$sqlDelightVersion")
 
         }
     }
@@ -118,4 +131,14 @@ compose.desktop {
 
 task("testClasses").doLast {
     println("This is a dummy testClasses task")
+}
+
+sqldelight {
+    databases {
+        create("MyAppDb") {
+            packageName.set("com.mounty.camper.cache")
+        }
+    }
+    linkSqlite = true
+
 }

@@ -8,8 +8,6 @@ data class User(
     val name: String,
     val email: String,
     val gender: String,
-    val status: String
-){
+    val status: String,
     var isFavorite: Boolean = false
-
-}
+)

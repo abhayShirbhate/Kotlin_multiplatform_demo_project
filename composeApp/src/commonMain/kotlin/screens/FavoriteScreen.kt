@@ -1,12 +1,12 @@
 package screens
 
-import Api.ApiClient
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -15,20 +15,21 @@ import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import viewmodel.FavoriteViewModel
 import models.User
-import repository.UserRepositoryImpl
+import repository.UserLocalDbRepositoryImpl
+import sqDelight.DatabaseDriverFactory
+import sqDelight.UserDao
 
 @Composable
-fun FavoritePage() {
+fun FavoritePage(databaseDriverFactory: DatabaseDriverFactory) {
     val viewModel: FavoriteViewModel = getViewModel(Unit, viewModelFactory {
         FavoriteViewModel(
-            UserRepositoryImpl(
-                ApiClient()
+            UserLocalDbRepositoryImpl(
+                UserDao(databaseDriverFactory)
             )
         )
     })
 
     val userList: List<User> by viewModel.userListFlow.collectAsState(initial = emptyList())
-
 
     LazyColumn(
         modifier = Modifier
@@ -42,6 +43,7 @@ fun FavoritePage() {
         }
     }
 
-
-//    viewModel.getAllFavoriteUsers()
+    LaunchedEffect(Unit){
+        viewModel.getAllFavoriteUsers()
+    }
 }

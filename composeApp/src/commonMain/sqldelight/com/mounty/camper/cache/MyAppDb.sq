@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS user(
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    gender TEXT NOT NULL,
+    status TEXT NOT NULL,
+    isFavourite INTEGER NOT NULL
+);
+
+inserUser:
+INSERT OR REPLACE INTO user(id,name,email,gender,status,isFavourite)
+VALUES (:id, :name, :email, :gender, :status,:isFavourite);
+
+selectAllUser:
+SELECT user.* FROM user  LIMIT :pageSize OFFSET :offset;
+
+deleteUser:
+DELETE FROM user WHERE id = :id;
+
+getAllFavouriteUser:
+SELECT user.* FROM user WHERE isFavourite = 1;
+
+updateFavouriteState:
+UPDATE user SET isFavourite = ? WHERE id = ?;
